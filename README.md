@@ -39,7 +39,8 @@ generate a random list for other prices
 
 
 You can see some 
-[screenshots of Run](https://github.com/Bazzbaz/run/wiki/Run-Screenshots)
+[screenshots of main board](https://github.com/Bazzbaz/run/wiki)
+[screenshots of Race 10 KM](https://github.com/Bazzbaz/run/wiki/Screen-shot-10KM)
 
 How to install and run
 ----------------------

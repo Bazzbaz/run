@@ -6,27 +6,27 @@ import java.time.LocalTime;
 import java.time.Period;
 
 public class Runner implements Comparable<Runner> {
-    public static String ABANDON = "abandon";
+    public static String DNF = "DNF";
 
     // runner info
     public int bibNb = 0;
     public Sex sex = Sex.M;
-    public String name = "Onyme";
-    public String firstName = "Anne";
+    public String name = "NAME";
+    public String firstName = "first-name";
     public String birthday = "01/10/1977";
     public int age = 0;
-    public String raceName = "";
+    public String raceName = "TODO";
     public boolean hasPaid = true;
     // club
-    public String licence = "";
-    public String club = "SC";
+    public String licence = "N/A";
+    public String club = "N/A";
     public boolean certifOk = true;
     // contacts
-    public String address = "";
-    public String city = "";
-    public String email = "";
+    public String address = "address";
+    public String city = "city";
+    public String email = "mail";
     // results
-    public String time = "00:00:00";
+    public String time = DNF;//"00:00:00";
     public int rank = 0;
 
     public Runner(String nom, String prenom, String adresse, String ville, String naissance, String sexe,
@@ -60,6 +60,10 @@ public class Runner implements Comparable<Runner> {
         // TODO Auto-generated constructor stub
     }
 
+    public Runner(int pBibNb) {
+        bibNb = pBibNb;
+    }
+
     public int getBibNb() {
         return bibNb;
     }
@@ -79,7 +83,11 @@ public class Runner implements Comparable<Runner> {
     public String getCity() {
         return city;
     }
-
+    
+    public String getMail() {
+        return email;
+    }
+    
     public int getAge() {
         return age;
     }
@@ -140,6 +148,10 @@ public class Runner implements Comparable<Runner> {
         this.city = ville;
     }
 
+    public void setMail(String mail) {
+     this.email = mail;
+    }
+
     public void setAge() {
         try {
 
@@ -159,7 +171,7 @@ public class Runner implements Comparable<Runner> {
         this.age = age;
     }
 
-    public void setNaissance(String naissance) {
+    public void setBirthday(String naissance) {
         this.birthday = naissance;
     }
 
@@ -221,7 +233,7 @@ public class Runner implements Comparable<Runner> {
     public int compareTo(Runner arg0) {
         // "%d:%02d:%02d"
         String strTemps0 = arg0.getTime();
-        if (strTemps0.equalsIgnoreCase(ABANDON)) {
+        if (strTemps0.equalsIgnoreCase(DNF)) {
             return -1;
         }
         String str[] = strTemps0.split(":");
@@ -232,7 +244,7 @@ public class Runner implements Comparable<Runner> {
 
         // "%d:%02d:%02d"
         String strTemps1 = this.getTime();
-        if (strTemps1.equalsIgnoreCase(ABANDON)) {
+        if (strTemps1.equalsIgnoreCase(DNF)) {
             return 1;
         }
         str = strTemps1.split(":");
@@ -243,5 +255,7 @@ public class Runner implements Comparable<Runner> {
 
         return thisTime.compareTo(temps0);
     }
+
+
 
 }

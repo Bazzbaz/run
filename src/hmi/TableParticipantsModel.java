@@ -37,6 +37,10 @@ public class TableParticipantsModel extends AbstractTableModel {
         // this.data = new ArrayList<Coureur>();
     }
 
+    public ArrayList<Runner> getData() {
+        return data;
+    }
+
     public void updateData(ArrayList<Runner> dataEntries) {
         this.data = dataEntries;
         this.fireTableDataChanged();
@@ -151,7 +155,7 @@ public class TableParticipantsModel extends AbstractTableModel {
             data.get(row).setAddress((String) value);
             break;
         case NAISSANCE_COLUM:
-            data.get(row).setNaissance((String) value);
+            data.get(row).setBirthday((String) value);
             break;
 
         default:

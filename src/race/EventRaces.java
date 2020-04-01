@@ -16,11 +16,17 @@ public class EventRaces {
     public ArrayList<Runner> participants;
     public ArrayList<Race> races = new ArrayList<Race>();
 
-    public EventRaces(ArrayList<Runner> p, String date, String commentaire) {
+    public EventRaces(ArrayList<Runner> p) {
         super();
-        this.date = date;
-        this.comment = commentaire;
-        this.participants = p;
+        participants = p;
+    }
+
+    public ArrayList<Runner> getParticipants() {
+        return participants;
+    }
+
+    public ArrayList<Race> getRaces() {
+        return races;
     }
 
     @Override
@@ -49,7 +55,8 @@ public class EventRaces {
 
     public void read(String filename) {
         BufferedReader reader;
-        int nbCourse = 0;
+        this.date = date;
+        this.comment = filename;
         try {
             reader = new BufferedReader(new FileReader(filename + ".csv"));
             reader.readLine();// bib number, name,...
@@ -99,31 +106,9 @@ public class EventRaces {
 
                 }
 
-                Race course = null;
-                for (Race c : races) {
-                    if (c.raceName.equalsIgnoreCase(coureur.raceName)) {
-                        course = c;
-                    }
-                }
+                Race course = findRace(coureur.raceName);
 
-                if (course == null) {
-                    course = new Race(coureur.raceName);
-                    races.add(course);
-                    switch (nbCourse) {
-                    case 0:
-                        course.color = Color.white;
-                        break;
-                    case 1:
-                        course.color = Color.lightGray;
-                        break;
-                    case 2:
-                        course.color = Color.green;
-                        break;
-                    }
-                    nbCourse++;
-                }
-
-                this.participants.add(coureur);
+                participants.add(coureur);
                 course.participants.add(coureur);
                 coureur.setRaceName(course.raceName);
 
@@ -134,6 +119,36 @@ public class EventRaces {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public Race findRace(String raceName) {
+        Race course = null;
+        for (Race c : races) {
+            if (c.raceName.equalsIgnoreCase(raceName)) {
+                course = c;
+            }
+        }
+
+        int nbCourse = 0;
+        if (course == null) {
+            course = new Race(raceName);
+            races.add(course);
+            switch (nbCourse) {
+            case 0:
+                course.color = Color.white;
+                break;
+            case 1:
+                course.color = Color.lightGray;
+                break;
+            case 2:
+                course.color = Color.green;
+                break;
+            }
+            nbCourse++;
+        }
+
+        return course;
     }
 
 }

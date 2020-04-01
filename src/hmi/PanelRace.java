@@ -1,60 +1,63 @@
 package hmi;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
 
 import race.Race;
 
 @SuppressWarnings("serial")
 public class PanelRace extends JPanel {
+    // Attributes
     private Race race;
+
     private TableStart tableStart;
     private TableFinish tableFinish;
-    private PanelChrono chrono;
-    private PanelConfirmFinish panelConfirmFinish;
+    private final PanelChrono panelTimer;
+    private final PanelConfirmFinish panelValidate;
 
-    public PanelRace(Race pCourse) {
-        race = pCourse;
-
-        JPanel panelDepart = new JPanel();
-        panelDepart.setLayout(new BoxLayout(panelDepart, BoxLayout.Y_AXIS));
-
-        JPanel panelListeDepart = new JPanel();
-        panelDepart.add(panelListeDepart);
-        panelListeDepart.setLayout(new BorderLayout(0, 0));
-        this.tableStart = new TableStart(race, this);
-        panelListeDepart.add(getTablerStart());
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        add(panelDepart);
-
-        panelConfirmFinish = new PanelConfirmFinish(this);
-        panelDepart.add(panelConfirmFinish);
-
-        // vertical struct
-        add(Box.createVerticalStrut(20));
-
-        JPanel panelArrivee = new JPanel();
-        JPanel panelTimer = new JPanel();
-        JPanel panelListeArrivee = new JPanel();
-        panelTimer.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-        this.chrono = new PanelChrono(this);
-        this.tableFinish = new TableFinish(this);
-
-        panelTimer.add(getChrono());
-        panelListeArrivee.setLayout(new BorderLayout(0, 0));
-        panelListeArrivee.add(getTableFinish());
-        panelArrivee.setLayout(new BoxLayout(panelArrivee, BoxLayout.Y_AXIS));
-        panelArrivee.add(panelTimer);
-        panelArrivee.add(panelListeArrivee);
-        add(panelArrivee);
+    public PanelRace(Race pRace) {
+        race = pRace;
+        tableStart = new TableStart(race, this);
+        tableFinish = new TableFinish(this);
+        panelTimer = new PanelChrono(this);
+        panelValidate = new PanelConfirmFinish(this);
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+
+        JPanel panelStart = new JPanel();
+        add(panelStart);
+
+        panelStart.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+        panelStart.setLayout(new BoxLayout(panelStart, BoxLayout.Y_AXIS));
+        JPanel panelStartList = new JPanel();
+        panelStartList.setLayout(new BorderLayout(0, 0));
+        panelStartList.add(tableStart);
+
+        panelStart.add(panelStartList);
+        panelStart.add(Box.createVerticalStrut(10));
+        panelStart.add(panelValidate);
+
+        add(Box.createHorizontalStrut(5));
+
+        JPanel panelArrive = new JPanel();
+        add(panelArrive);
+        
+        panelArrive.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+        panelArrive.setLayout(new BoxLayout(panelArrive, BoxLayout.Y_AXIS));
+        JPanel panelArriveList = new JPanel();
+        panelArriveList.setLayout(new BorderLayout(0, 0));
+        panelArriveList.add(tableFinish);
+
+        panelArrive.add(panelTimer);
+        panelArrive.add(Box.createVerticalStrut(10));
+        panelArrive.add(panelArriveList);
+
     }
 
     public Race getRace() {
@@ -70,11 +73,11 @@ public class PanelRace extends JPanel {
     }
 
     public PanelChrono getChrono() {
-        return chrono;
+        return panelTimer;
     }
 
     public JSpinner getDossard() {
-        return panelConfirmFinish.getSpinnerBibNb();
+        return panelValidate.getSpBibNb();
     }
 
 }
